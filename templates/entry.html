@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <form class="card-body"
+          style="width:30%;margin-left:auto;margin-right:auto;display:block;">
+        <p>
+            {{ form.em.label }}<br>
+            {{ form.em(type="email") }}
+            {% for error in form.em.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.pas.label }}<br>
+            {{ form.pas(type="password") }}
+            {% for error in form.pas.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        {{ message }}
+        <p>{{ form.forgot() }} {{ form.forgot.label }}</p>
+        <p>{{ form.sub(type="submit", class="bbt") }}</p>
+    </form>
+{% endblock %}

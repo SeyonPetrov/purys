@@ -1,0 +1,22 @@
+{
+  "our_space_crew": {
+    "Member_1": {
+      "name": "Владимир Изяславович",
+      "surname": " Сеченов",
+      "photo": "static/img/member_1.png",
+      "professions": "капитан коробля, инженер, летчик-испытатель, авиаконструктор"
+    },
+    "Member_2": {
+      "name": "Людосиэл",
+      "surname": " Саморк'Ант",
+      "photo": "static/img/member_2.png",
+      "professions": "геолог, астрофизик, оператор самоходных механизмов"
+    },
+    "Member_3": {
+      "name": "Генадий Захарович",
+      "surname": " Рибосомов",
+      "photo": "static/img/member_3.png",
+      "professions": "биолог, агроном, врач, физик"
+    }
+  }
+}

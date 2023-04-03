@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block table %}
+        {% for i in range(1, lengh) %}
+                <h3 style="text-align:center;">Action #{{ loop.index }}</h3>
+                <table class="table">
+                  <thead>
+                    <tr class="table-active">
+                      <th>Title of activity</th>
+                      <th>Team leader</th>
+                      <th>Duration</th>
+                      <th>List of collaboration</th>
+                      <th>is finished</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="table-warning">
+                      <td>{{ data[loop.index][0] }}</td>
+                      <td>{{ data[loop.index][1] }}</td>
+                      <td>{{ data[loop.index][2] }}</td>
+                      <td>{{ data[loop.index][3] }}</td>
+                      <td class="table-success">{{ data[loop.index][4] }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+        {% endfor %}
+{% endblock %}

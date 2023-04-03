@@ -1,0 +1,45 @@
+{% extends 'index.html'%}
+
+{% block content %}
+  <form class="card-body"
+          style="width:30%;margin-left:auto;margin-right:auto;">
+    <p>
+        {{ form.job.label }}<br>
+        {{ form.job(type="job") }}
+        {% for error in form.job.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.work_size.label }}<br>
+        {{ form.work_size(type="int") }}
+        {% for error in form.work_size.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.captain.label }}<br>
+        {{ form.captain(type="str") }}
+        {% for error in form.captain.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.members.label }}<br>
+        {{ form.members(type="string") }}
+        {% for error in form.members.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>{{ form.is_finished() }} {{ form.is_finished.label }}</p>
+    <p>{{ form.btn(type="submit", class="btn btn-danger") }}</p>
+  </form>
+{% endblock%}

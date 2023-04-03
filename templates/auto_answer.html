@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block answer %}
+        <div class="card base">
+                <p><span class="one">Фамилия:</span> {{ x["surname"] }}</p>
+                <p><span>Имя:</span> {{ x["name"] }}</p>
+                <p><span>Образование:</span> {{ x["education"] }}</p>
+                <p><span>Профессии:</span> {{ x["profession"] }}</p>
+                <p><span>Пол:</span> {{ x["sex"] }}</p>
+                <p><span>Мотивация:</span> {{ x["motivation"] }}</p>
+                <p><span>Готовы остаться на марсе?</span>  {{ x["ready"] }}</p>
+        </div>
+{% endblock %}
