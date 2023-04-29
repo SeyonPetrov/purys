@@ -1,2 +1,2 @@
-from . import users
-from . import jobs
+from data import users
+from data import jobs

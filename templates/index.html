@@ -85,7 +85,8 @@
             <h4 style="color:#bbbbbb;text-align:center;">И на Марсе будут яблони цвести</h4>
             <div>
                 {% if current_user.is_authenticated %}
-                    <p>{{ current_user.name }}</p>
+                    <p style="text-align:center;font-weight:900;font-size:130%;">{{ current_user.name }}</p>
+                    <a href="/logout" class="btn btn-light">выйти из аккаунта</a>
                 {% else %}
                             <a class="bn1" href="/entry">Войти</a>
                             <a class="bn2" href="/login">Зарегистрироваться</a>

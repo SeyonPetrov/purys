@@ -1,3 +1,4 @@
+import flask_login
 from wtforms import EmailField, PasswordField, \
     BooleanField, SubmitField, StringField, IntegerRangeField, SelectField, SelectMultipleField
 from data import db_session
@@ -46,12 +47,42 @@ class EntryForm(FlaskForm):
     sub = SubmitField('Войти')
 
 
+class ReWriteForm(FlaskForm):
+    sess = db_session.create_session()
+    act = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'Название задачи'})
+    team_ld = SelectField('Руководитель', choices=[f'{x.id}: {x.name} {x.surname}' for x in sess.query(User).all()],
+                          validators=[DataRequired()])
+    duration = SelectField('Время выполнения', choices=range(1000), validators=[DataRequired()])
+    featuring = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'участники'})
+    is_it_done = BooleanField('Выполнена ли задача?')
+    sub = SubmitField('Изменить')
+
+
+@app.route('/rewrite/<int:id_j>', methods=['GET', 'POST'])
+def rewrite(id_j):
+    form = ReWriteForm()
+
+    if form.validate_on_submit():
+        sess = db_session.create_session()
+        job = sess.query(Jobs).filter(Jobs.id == id_j).first()
+
+        job.job = form.act.data
+        job.team_leader = form.team_ld.data.split(':')[0]
+        job.collaborators = form.featuring.data
+        job.work_size = form.duration.data
+        job.is_finished = form.is_it_done.data
+
+        sess.commit()
+        return redirect('/')
+    return render_template('rewrite.html', form=form)
+
+
 @app.route('/entry', methods=['GET', 'POST'])
 def entry():
     form = EntryForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.email == form.em).first()
+        user = db_sess.query(User).filter(User.email == form.em.data).first()
         if user and user.check_password(form.pas.data):
             login_user(user, remember=form.forgot.data)
             return redirect('/')
@@ -111,7 +142,7 @@ def adding():
         sess = db_session.create_session()
         job = Jobs()
         job.job = form.job.data
-        job.team_leader = form.captain.data
+        job.team_leader = form.captain.data.split(':')[0]
         job.work_size = form.work_size.data
         job.collaborators = form.members.data
         job.is_finished = form.is_finished.data
@@ -136,14 +167,21 @@ def main():
     print(sess.query(Jobs).filter())
     for x in sess.query(Jobs).all():
         data.append([x.id, x.job, x.team_leader, x.work_size, x.collaborators, x.is_finished])
-    return render_template('main_page.html', form=form, data=data, lengh=len(data))
+    if flask_login.current_user.is_authenticated:
+        n = flask_login.current_user.id
+    else:
+        n = 0
+    return render_template('main_page.html', form=form, data=data, lengh=len(data), u_id=n)
 
 
-@app.route('/delete/<int:id>')
+@app.route('/delete/<int:id_n>')
 def deleting(id_n):
-    print(id_n  )
+    sess = db_session.create_session()
+    job = sess.query(Jobs).get(id_n)
+    sess.delete(job)
+    sess.commit()
     return redirect('/')
 
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1', debug=True)

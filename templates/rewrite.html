@@ -1,0 +1,43 @@
+{% extends 'index.html'%}
+
+{% block content %}
+    <form class="card-body" method="post" action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.act(type="job") }}
+            {% for error in form.act.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.team_ld.label }}
+            {{ form.team_ld(type="int") }}
+            {% for error in form.team_ld.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.duration.label }}
+            {{ form.duration(type="duration") }}
+            {% for error in form.duration.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.featuring(type="featuring") }}
+            {% for error in form.featuring.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.is_it_done() }} {{ form.is_it_done.label }}</p>
+        <p>{{ form.sub(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}
